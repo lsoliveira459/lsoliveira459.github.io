@@ -28,8 +28,8 @@
   },
 
   "contactinfo": {
-    //"address": "",
+    "address": "",
     "email": "contato@investir.rocks",
-    //"phone": ""
+    "phone": ""
   }
 }
