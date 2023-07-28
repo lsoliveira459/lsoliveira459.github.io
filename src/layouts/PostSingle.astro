@@ -7,12 +7,13 @@ import dateFormat from "@lib/utils/dateFormat";
 import similerItems from "@lib/utils/similarItems";
 import { humanize,markdownify,slugify } from "@lib/utils/textConverter";
 import { BiCalendarEdit,BiCategoryAlt } from "react-icons/bi/index.js";
+import { getReadingTime } from '../lib/readingtime.ts'
 
 const allAuthors = await getSinglePage("authors");
 const posts = await getSinglePage("posts");
-const { post } = Astro.props;
+const { post, frontmatter } = Astro.props;
 const similarPosts = similerItems(post, posts, post.slug);
-const { Content } = await post.render();
+const { Content, remarkPluginFrontmatter } = await post.render();
 const { title, description, authors, categories, image, date, tags } =
   post.data;
 ---
@@ -22,8 +23,8 @@ const { title, description, authors, categories, image, date, tags } =
     <article class="row justify-center">
       <div class="md:col-10 text-center">
         <h1 set:html={markdownify(title)} class="h2" />
-        <ul class="mt-4 flex flex-wrap items-center justify-center text-text">
-          <li class="mx-3">
+        <ul class="mt-5 flex flex-wrap items-center justify-center text-text">
+          <li class="mx-4">
             {
               allAuthors
                 .filter((author) =>
@@ -50,11 +51,11 @@ const { title, description, authors, categories, image, date, tags } =
                 ))
             }
           </li>
-          <li class="mx-3 flex items-center flex-wrap font-medium">
+          <li class="mx-4 flex items-center flex-wrap font-medium">
             <BiCalendarEdit className="mr-1 h-5 w-5 text-gray-600" />
             <>{dateFormat(date)}</>
           </li>
-          <li class="mx-3 flex items-center flex-wrap">
+          <li class="mx-4 flex items-center flex-wrap">
             <BiCategoryAlt className="mr-1 h-[18px] w-[18px] text-gray-600" />
             <>
             <ul>
@@ -72,6 +73,9 @@ const { title, description, authors, categories, image, date, tags } =
               }
             </ul>
             </>
+          </li>
+          <li class="mx-4 flex items-center flex-wrap font-medium">
+            <>{`Leitura de $getReadingTime(post.astro.html)`} min</>
           </li>
         </ul>
       </div>

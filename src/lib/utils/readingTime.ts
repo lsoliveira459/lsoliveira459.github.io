@@ -1,6 +1,6 @@
 // content reading
-const readingTime = (content: string) => {
-  const WPS = 275 / 60;
+export const readingTime = (content: string) => {
+  const WPS = 200 / 60;
 
   let images = 0;
   const regex = /\w/;
@@ -37,4 +37,4 @@ const readingTime = (content: string) => {
   }
 };
 
-export default readingTime;
+export default { readingTime };
